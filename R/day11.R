@@ -15,7 +15,14 @@ gr
 all_simple_paths(gr, "you", "out", mode = "out") |> length()
 
 # Second part -------------------------------------------------------------
-# 1. Paths from "svt" to "fft"
+# We can see that 
+is_dag(gr)
+
+# There must be a single path from svt --> fft --> dac --> out otherwise the
+# graph contains loops. In my case the correct order is "svr" --> "fft" --->
+# "dac" --> "out". The total number of path is just the product of the number of
+# paths going through each of the three steps. This is more efficient that total
+# enumeration. The cutoffs were chosen by trial and error.
 svr_fft <- all_simple_paths(gr, "svr", "fft", mode = "out", cutoff = 13)
 fft_dac <- all_simple_paths(gr, "fft", "dac", mode = "out", cutoff = 18)
 dac_out <- all_simple_paths(gr, "dac", "out", mode = "out", cutoff = 13)
